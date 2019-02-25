@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <script src="/Word-Guess-Game/Assets/Javascript/game.js"></script> -->
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="contentContainer">
+
+            <h1 id="intro">Press any key to turnip the beet!</h1>
+            <br>
+            <div id="guessesLeft">Guesses Left: 12</div>
+
+            <div id="winCount">Total Game Wins: 0</div>
+            <br>
+
+            <div id="currentWord"></div>
+
+            <div id="previousGuessDiv"></div>
+        </div>
+    </div>
+
+    <style>
+        html,
+        body {
+            background-image: url(images/veggie-backdrop.jpg);
+            background-size: cover;
+            height: 100%;
+            margin: 0;
+        }
+
+        .container {
+            height: 100%;
+            width: 100%;
+        }
+
+        .contentContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+    </style>
+
+
+    <script>
+
+        var arrayOfOptions = ["Ohhh kale yeah", "Everyday Im brusselin", "I yam what I yam", "Just a little chili", "Romaine Calm", "We make a great pear", "Im grapeful for you", "You are one in a melon", "I carrot go on", "Lettuce do our best", "Peas out"];
+
+
+        let getRandomElement = function (arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+        let randomCurrentWord
+        let arrayLetters
+        let arrayDashes
+        let guessList
+        let guessCount
+
+        let winCount = 0;
+
+        const setupGame = function () {
+            randomCurrentWord = getRandomElement(arrayOfOptions)
+
+            // create two arrays
+            // array 1 (hidden) - take randomCurrentWord and split it 
+            arrayLetters = randomCurrentWord.split("");
+            // console.log(arrayLetters)
+
+            // array 2 (dash array) - take hidden array and add dashes for everything that contains a letter, using the " "
+            // Using a ternary statement, if a " " then no underscore
+            arrayDashes = arrayLetters.map(function (element) {
+                return element === " " ? "&nbsp;&nbsp;&nbsp;" : "_";
+            })
+
+            guessList = {}
+            guessCount = 12
+        }
+
+        setupGame()
+        // console.log(setupGame())
+
+
+        document.onkeyup = function (event) {
+            let letterGuessed = event.key
+            let letterFound = false
+
+            arrayDashes = arrayDashes.map(
+                function (element, idx) {
+                    const letterMatch = arrayLetters[idx].toLowerCase() === letterGuessed;
+                    if (letterMatch) {
+                        letterFound = true
+                        return arrayLetters[idx]
+                    } else {
+                        return element
+                    }
+                }
+            )
+
+            if (letterFound === false) {
+                guessCount -= 1
+                guessList[event.key] = true
+                if (guessCount === 0) {
+
+                    var guessText = document.getElementById("guessesLeft");
+                    guessText.textContent = "Guesses Left: " + guessCount;
+
+                    alert("You Loose!")
+                    setupGame();
+                }
+            }
+
+            // take the arrayDash and make it a string by joining 
+            let stringDash = arrayDashes.join(" ");
+
+            // win count increase
+            if (arrayDashes.includes("_") === false) {
+                winCount++;
+                var winText = document.getElementById("winCount");
+                winText.textContent = "Total Game Wins: " + winCount;
+
+                var wordtoGuess = document.getElementById("currentWord");
+                wordtoGuess.innerHTML = stringDash
+
+                // alert("You Win!")
+
+                setupGame();
+            }
+
+            // show the random word selected through stringDash
+            var wordtoGuess = document.getElementById("currentWord");
+            wordtoGuess.innerHTML = stringDash
+
+            // to get keys, use Object.keys(obj) -> returns an arry of the keys
+            let guessStr = Object.keys(guessList).join(" ");
+
+            // show the previous guesses
+            var pastGuesses = document.getElementById("previousGuessDiv");
+            pastGuesses.textContent = guessStr
+
+            // Update guessCount with DOM mani
+            var guessText = document.getElementById("guessesLeft");
+            guessText.textContent = "Guesses Left: " + guessCount;
+
+
+
+        }
+
+    </script>
+
+</body>
+
+</html>
