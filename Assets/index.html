@@ -13,21 +13,20 @@
 
             <h1 id="intro">Press any key to turnip the beet!</h1>
             <br>
+            <div id="currentWord"></div>
+            <br>
             <div id="guessesLeft">Guesses Left: 12</div>
 
             <div id="winCount">Total Game Wins: 0</div>
             <br>
 
-            <div id="currentWord"></div>
-
-            <div id="previousGuessDiv"></div>
         </div>
     </div>
 
     <style>
         html,
         body {
-            background-image: url(./images/veggie-backdrop.jpg);
+            background-image: url(../images/veggie-backdrop.jpg);
             background-size: cover;
             height: 100%;
             margin: 0;
@@ -141,7 +140,7 @@
 
             // show the previous guesses
             var pastGuesses = document.getElementById("previousGuessDiv");
-            pastGuesses.textContent = guessStr
+            pastGuesses.textContent = "Letters Guessed: " + guessStr
 
             // Update guessCount with DOM mani
             var guessText = document.getElementById("guessesLeft");
