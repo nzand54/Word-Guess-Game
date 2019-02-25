@@ -20,13 +20,16 @@
             <div id="winCount">Total Game Wins: 0</div>
             <br>
 
+
+
+            <div id="previousGuessDiv"></div>
         </div>
     </div>
 
     <style>
         html,
         body {
-            background-image: url(../images/veggie-backdrop.jpg);
+            background-image: url(./images/veggie-backdrop.jpg);
             background-size: cover;
             height: 100%;
             margin: 0;
@@ -140,11 +143,11 @@
 
             // show the previous guesses
             var pastGuesses = document.getElementById("previousGuessDiv");
-            pastGuesses.textContent = "Letters Guessed: " + guessStr
+            pastGuesses.textContent = "Letters Guessed:" + guessStr
 
             // Update guessCount with DOM mani
             var guessText = document.getElementById("guessesLeft");
-            guessText.textContent = "Guesses Left: " + guessCount;
+            guessText.textContent = "Guesses Left:  " + guessCount;
 
 
 
